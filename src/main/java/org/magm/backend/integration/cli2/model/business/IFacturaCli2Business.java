@@ -19,7 +19,9 @@ public interface IFacturaCli2Business {
 	public FacturaCli2 update(FacturaCli2 facturaCli2) throws NotFoundException, BusinessException;
 	
 	public FacturaCli2 anularFacturaCli2(long numero) throws NotFoundException, BusinessException;
+	
+	public FacturaCli2 desanularFacturaCli2(long numero) throws NotFoundException, BusinessException;
 
-	public void delete(long id) throws NotFoundException, BusinessException;
+	public void delete(long numero) throws NotFoundException, BusinessException;
 
 }

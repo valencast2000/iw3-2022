@@ -12,13 +12,14 @@ import java.util.Set;
 
 @Entity
 @Table(name="cli2_facturas")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class FacturaCli2 implements Serializable {
 
-	private static final long serialVersionUID = 255448649360363814L;
+	private static final long serialVersionUID = -8338132664128927339L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +37,8 @@ public class FacturaCli2 implements Serializable {
     @Column(columnDefinition = "tinyint default 0", nullable = false)
     private boolean anulada;
     
-    @OneToMany()
-    @JoinColumn(name="cli2_facturas_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cli2_facturas_id", nullable = true)
     private Set<ItemCli2> items; 
     
     

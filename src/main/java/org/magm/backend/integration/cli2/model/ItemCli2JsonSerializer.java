@@ -17,15 +17,15 @@ public class ItemCli2JsonSerializer extends StdSerializer<ItemCli2>{
 	@Override
 	public void serialize(ItemCli2 value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 		gen.writeStartObject();
-		gen.writeNumberField("id", value.getId());
+		gen.writeNumberField("id", value.getId());	
+		gen.writeNumberField("cantidad", value.getCantidad());
+		gen.writeNumberField("precio", value.getPrecio());
 		
 		gen.writeObjectFieldStart("producto");
 		gen.writeNumberField("id", value.getProduct().getId());
 		gen.writeStringField("producto", value.getProduct().getProduct());
 		gen.writeEndObject();
 		
-		gen.writeNumberField("cantidad", value.getCantidad());
-		gen.writeNumberField("precio", value.getPrecio());
 		gen.writeEndObject();
 	}
 

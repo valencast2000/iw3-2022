@@ -7,34 +7,22 @@ import org.magm.backend.model.business.BusinessException;
 import org.magm.backend.model.business.FoundException;
 import org.magm.backend.model.business.NotFoundException;
 import org.magm.backend.util.IStandartResponseBusiness;
-import org.magm.backend.util.JsonUtiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.magm.backend.controllers.BaseRestController;
-import org.magm.backend.controllers.Constants;
-import org.magm.backend.integration.cli1.model.ProductCli1;
 import org.magm.backend.integration.cli2.model.FacturaCli2;
 import org.magm.backend.integration.cli2.model.business.IFacturaCli2Business;
-import org.magm.backend.util.IStandartResponseBusiness;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Profile({"cli2","mysqldev"})
 @RestController
@@ -106,11 +94,35 @@ public class FacturaCli2RestController extends BaseRestController {
 			return new ResponseEntity<>(response.build(HttpStatus.NOT_FOUND, e, e.getMessage()), HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@DeleteMapping(value="/eliminada/{numero}")
+    public ResponseEntity<?> delete(@PathVariable("numero") long numero){
+        try {
+            facturaBusiness.delete(numero);
+            return new ResponseEntity<>( HttpStatus.OK);
+        } catch (BusinessException | NotFoundException e) {
+            return new ResponseEntity<>(response.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 	@PutMapping(value = "/anulada/{numero}")
-	public ResponseEntity<?> update(@PathVariable("numero") long numero) {
+	public ResponseEntity<?> anularFacturaCli2(@PathVariable("numero") long numero) {
 		try {
 			facturaBusiness.anularFacturaCli2(numero);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(response.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(response.build(HttpStatus.NOT_FOUND, e, e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PutMapping(value = "/desanulada/{numero}")
+	public ResponseEntity<?> desanularFacturaCli2(@PathVariable("numero") long numero) {
+		try {
+			facturaBusiness.desanularFacturaCli2(numero);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<>(response.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),

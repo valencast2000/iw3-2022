@@ -99,6 +99,17 @@ public class FacturaCli2Business implements IFacturaCli2Business {
 		
 	}
 	
+	public FacturaCli2 desanularFacturaCli2(long numero) throws NotFoundException, BusinessException {
+		try {
+			FacturaCli2 facturaCli2 = load(numero);
+			facturaCli2.setAnulada(false);
+			return facturaCli2DAO.save(facturaCli2);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw BusinessException.builder().ex(e).build();
+		}
+	}
+	
 	@Override
 	public void delete(long numero) throws NotFoundException, BusinessException {
 		FacturaCli2 r;
