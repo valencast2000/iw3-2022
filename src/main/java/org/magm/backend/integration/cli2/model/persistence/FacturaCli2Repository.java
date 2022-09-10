@@ -14,6 +14,6 @@ public interface FacturaCli2Repository extends JpaRepository<FacturaCli2, Long> 
 	Optional<FacturaCli2> findOneByNumero(Long numero);
 	
 	@Query(value="SELECT * FROM cli2_facturas WHERE anulada=0", nativeQuery = true)
-	public List<FacturaCli2> FindAllFacturaCli2Anulada();
+	public List<FacturaCli2> FindAllFacturaCli2NoAnulada();
 
 }

@@ -12,11 +12,13 @@ public interface IFacturaCli2Business {
 	
 	public List<FacturaCli2> list() throws BusinessException;
 	
-	public List<FacturaCli2> listAnulada() throws BusinessException;
+	public List<FacturaCli2> listNoAnulada() throws BusinessException;
 
 	public FacturaCli2 add(FacturaCli2 facturaCli2) throws FoundException, BusinessException;
 
 	public FacturaCli2 update(FacturaCli2 facturaCli2) throws NotFoundException, BusinessException;
+	
+	public FacturaCli2 anularFacturaCli2(long numero) throws NotFoundException, BusinessException;
 
 	public void delete(long id) throws NotFoundException, BusinessException;
 

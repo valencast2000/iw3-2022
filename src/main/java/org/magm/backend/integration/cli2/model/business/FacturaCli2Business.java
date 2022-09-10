@@ -50,9 +50,9 @@ public class FacturaCli2Business implements IFacturaCli2Business {
 
 	
 	@Override
-	public List<FacturaCli2> listAnulada() throws BusinessException {
+	public List<FacturaCli2> listNoAnulada() throws BusinessException {
 		try {
-			return facturaCli2DAO.FindAllFacturaCli2Anulada();
+			return facturaCli2DAO.FindAllFacturaCli2NoAnulada();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw BusinessException.builder().ex(e).build();
@@ -78,8 +78,8 @@ public class FacturaCli2Business implements IFacturaCli2Business {
 	
 	@Override
 	public FacturaCli2 update(FacturaCli2 facturaCli2) throws NotFoundException, BusinessException {
-		load(facturaCli2.getNumero());
 		try {
+			load(facturaCli2.getNumero());
 			return facturaCli2DAO.save(facturaCli2);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -87,6 +87,17 @@ public class FacturaCli2Business implements IFacturaCli2Business {
 		}
 	}
 
+	public FacturaCli2 anularFacturaCli2(long numero) throws NotFoundException, BusinessException {
+		try {
+			FacturaCli2 facturaCli2 = load(numero);
+			facturaCli2.setAnulada(true);
+			return facturaCli2DAO.save(facturaCli2);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw BusinessException.builder().ex(e).build();
+		}
+		
+	}
 	
 	@Override
 	public void delete(long numero) throws NotFoundException, BusinessException {
