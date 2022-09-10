@@ -22,8 +22,8 @@ public class ItemCli2JsonSerializer extends StdSerializer<ItemCli2>{
 		gen.writeNumberField("precio", value.getPrecio());
 		
 		gen.writeObjectFieldStart("producto");
-		gen.writeNumberField("id", value.getProduct().getId());
-		gen.writeStringField("producto", value.getProduct().getProduct());
+		gen.writeNumberField("id", value.getProducto().getId());
+		gen.writeStringField("producto", value.getProducto().getProduct());
 		gen.writeEndObject();
 		
 		gen.writeEndObject();
